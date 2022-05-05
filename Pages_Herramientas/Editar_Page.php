@@ -1,3 +1,32 @@
+<?php
+    error_reporting(0);
+    $servername = "localhost";
+    $database = "inmuebles";
+    $username = "root";
+    $password = "";
+    // Create connection
+    $Referencia=$_GET["Referencia"];
+    
+    $conn = mysqli_connect($servername, $username, $password, $database);
+    $consulta=Traer($conn, $Referencia);
+
+    function Traer($conn, $Referencia){
+    $consulta = "SELECT * FROM inmuebles WHERE Referencia = '$Referencia'";
+    $resultado= mysqli_query($conn, $consulta) or die(mysqli_error($conn));
+    $filas = mysqli_fetch_assoc($resultado);
+    return [
+        $filas['Referencia'],
+        $filas['Propietario'],
+        $filas['Direccion'],
+        $filas['Email'],
+        $filas['Tipo']
+    ];
+}
+
+$Formatos= explode(',',$consulta[4]);
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,7 +37,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Inmuebles</title>
+    <title> Crear Inmuebles</title>
   </head>
   <body>
       <header>
@@ -23,8 +52,7 @@
                 <li class="nav-item fs-6 ms-3 rounded-pill bg-light"><a class="nav-link active text-black" aria-current="page" href="../Pages_Principal/Cuentas.html">Cuentas</a></li>
                 <li class="nav-item dropdown  fs-6 ms-3 rounded-pill bg-light"><a class="nav-link dropdown-toggle fs-6 text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Herramientas</a>
                   <ul class="dropdown-menu  fs-6 ms-3 " aria-labelledby="navbarDropdown">
-                    <li class="nav-item fs-6"><a class="nav-link text-black" href="../Pages_Herramientas/Borrar.html">Borrar</a></li>
-                    <li class="nav-item fs-6"><a class="nav-link text-black" href="../Pages_Herramientas/Editar.html">Editar</a></li>
+                    <li class="nav-item fs-6"><a class="nav-link text-black" href="./Editar_P.php">Editar</a></li>
                   </ul>
                 </li>
               </ul>
@@ -39,32 +67,30 @@
   <main>
     <section class="mx-auto " style="width: 700px;">
         <h1 class=" fst-italic text-black text-center"> Crear inmueble</h1>
-      <form>
+      <form method="POST" action="Editar.php">
+
+
+        <input type='hidden' class='form-control' name='E_Referencia' value='<?php echo $_GET["Referencia"];?>'>
+
         <div class="row mb-3">
           <label for="inputString" class="col-sm-2 col-form-label">Propietario:</label>
           <div class="col-sm-10">
-            <input type="String" class="form-control" id="In_Propietario">
+            <input type="String" class="form-control" name="E_Propietario" value="<?php echo $consulta[1]?>">
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label for="inputInteger" class="col-sm-2 col-form-label">Referencia:</label>
-          <div class="col-sm-10">
-            <input type="number" class="form-control" id="In_Referencia">
-          </div>
-        </div>
 
         <div class="row mb-3">
           <label for="inputInteger" class="col-sm-2 col-form-label">Dirección:</label>
           <div class="col-sm-10">
-            <input type="String" class="form-control" id="In_Direccion" >
+            <input type="String" class="form-control" name="E_Direccion"  value="<?php echo $consulta[2]?>">
         </div>
       </div>
 
         <div class="row mb-3">
           <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="In_Email">
+            <input type="email" class="form-control" name="E_Email" value="<?php echo $consulta[3]?>">
           </div>
         </div>
       
@@ -73,51 +99,31 @@
           <div class="col-sm-10">
             
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="In_Apartamento" value="option1" checked>
-              <label class="form-check-label" for="opcion1">
+              <input class="form-check-input" type="radio" name="EgridRadios" value="Apartamento" <?php if(in_array('Apartamento',$Formatos)== true){echo 'checked = "checked"';} ?>>
+              <label class="form-check-label" for="Edificio">
                 Apartamento
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="In_parqueadero" value="option2">
-              <label class="form-check-label" for="Opcion2">
+              <input class="form-check-input" type="radio" name="EgridRadios" value="Parqueadero" <?php if(in_array('Parqueadero',$Formatos)== true){echo 'checked = "checked"';} ?>>
+              <label class="form-check-label" for="Edificio">
                 Parqueadero
               </label>
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="gridRadios" id="gIn_Edificio" value="option3">
-              <label class="form-check-label" for="opcion3">
+              <input class="form-check-input" type="radio" name="EgridRadios" value="Edificio" <?php if(in_array('Edificio',$Formatos)== true){echo 'checked = "checked"';} ?>>
+              <label class="form-check-label" for="Edificio">
                 Edificio
               </label>
             </div>
           </div>
         </fieldset>
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <button type="submit" class="btn btn-primary">Editar</button>
       </form>
     </section>
-
-    <H1></H1>
-    <H1></H1>
-
-    <section class=" mx-auto border border-5 border-dark" style="width: 800px;"" >
-      <section class="mx-auto " style="width: 700px;">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Referencia</th>
-              <th scope="col">Propietario</th>
-              <th scope="col">Administración</th>
-              <th scope="col">Tipo</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </section>
-    </section>
-      
+  
   </main>
 
 
