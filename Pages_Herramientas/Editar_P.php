@@ -68,7 +68,7 @@
                 echo "<td>"; echo $filas['Email']; echo"</td>";
                 echo "<td>"; echo $filas['Tipo']; echo"</td>";
                 echo "<td> <a href='Editar_Page.php?Referencia=".$filas['Referencia']."'> <button type='button' class='btn btn-success'> Editar </button></a> </td>";
-                echo "<td> <a href='Eliminar.php?Referencia=".$filas['Referencia']."'><button type='button' class='btn btn-danger'>Eliminar</button></a> </td>";
+                echo "<td> <a href='Eliminar_Inm.php?Referencia=".$filas['Referencia']."'><button type='button' class='btn btn-danger'>Eliminar</button></a> </td>";
                 echo "</tr>";
               }
               ?>

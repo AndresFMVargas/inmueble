@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+
     <title> Crear Inmuebles</title>
   </head>
   <body>
@@ -38,7 +39,7 @@
   <main>
     <section class="mx-auto " style="width: 700px;">
         <h1 class=" fst-italic text-black text-center"> Crear inmueble</h1>
-      <form method="POST" action="Insertar.php">
+      <form method="POST" action="Insertar_Inm.php">
 
         <div class="row mb-3">
           <label for="inputInteger" class="col-sm-2 col-form-label">Referencia:</label>
